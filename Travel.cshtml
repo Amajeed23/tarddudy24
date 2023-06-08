@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Travel</title>
+    <link href="~/css/busanimation.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="Time">
+        @foreach (var s in ViewBag.Schedule)
+        {
+            <div id="TimeDiv" hidden>@s.Time</div>
+        }
+        <p>You Should Be There In : <text id="test"></text></p>
+    </div>
+    <div class="container">
+        @foreach (var schedule in ViewBag.Schedule)
+        {
+            <div class="station from"><p>@schedule.StationFrom</p></div>
+            <div class="station to"><p>@schedule.StationTo</p></div>
+            <div class="bus"></div>
+        }
+    </div>
+    
+    <script>
+        setInterval(function () {
+            // Get all the time divs
+            var timeDivs = document.querySelectorAll("#TimeDiv");
+
+            // Get the current time
+            var currentTime = new Date();
+
+            // Loop through each time div
+            timeDivs.forEach(function (timeDiv) {
+                // Get the start time from the div
+                var startTimeStr = timeDiv.innerText;
+                var startTime = new Date();
+                startTime.setHours(parseInt(startTimeStr.split(":")[0]));
+                startTime.setMinutes(parseInt(startTimeStr.split(":")[1]));
+                startTime.setSeconds(parseInt(startTimeStr.split(":")[2]));
+
+                // Add 15 minutes to the start time to get the end time
+                var endTime = new Date(startTime.getTime() + (15 * 60 * 1000));
+
+                // Calculate the time difference between the end time and the current time in milliseconds
+                var timeDiff = endTime - currentTime;
+
+                if (timeDiff <= 0) {
+                    window.location.href = "/Passenger/Home";
+                }
+                else {
+                    // Convert the time difference to minutes and seconds
+                    var countdownMinutes = Math.floor(timeDiff / 1000 / 60);
+                    var countdownSeconds = Math.floor((timeDiff / 1000) % 60);
+
+                    // Update the text of the test element withthe countdown time
+                    var testElement = document.getElementById("test");
+                    testElement.innerText = countdownMinutes.toString().padStart(2, "0") + ":" + countdownSeconds.toString().padStart(2, "0");
+                }
+
+            });
+        }, 1000);
+        
+    </script>
+</body>
+</html>

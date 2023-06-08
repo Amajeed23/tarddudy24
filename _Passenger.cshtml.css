@@ -1,0 +1,86 @@
+﻿/*Navbar*/
+
+.navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+}
+
+.navbar .navbar-collapse {
+    text-align: center;
+}
+
+body {
+    font-size: 16px;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+.navbar-brand {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/*Fin de Navbar*/
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Pacifico;
+    width: 100%;
+}
+
+.extra {
+    height: 480px;
+}
+
+/*BG*/
+
+.home {
+    background: url('https://lh3.googleusercontent.com/-N972KISC-6U/VzfJCFuU_YI/AAAAAAAAOsc/hWSMUzacdmQvCr_H4Zy2mYYcUtkkvZRsACCo/s2048/DSC_0297-blancoynegro.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    padding-top: 60px;
+}
+
+
+.about {
+    background: url('https://lh3.googleusercontent.com/-AcWr5_cFuKM/Vzhh0t3QCJI/AAAAAAAAOtE/BYyyhvdCgP0YEIScNmoVewX-O1QmxiHuQCCo/s2048/LOGO5.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    /* width:100%; */
+    padding-top: 60px;
+}
+
+.portfolio {
+    background-color: #ebebeb;
+    background-size: cover;
+    /*height:100%;
+  width:100%;*/
+    padding-top: 60px;
+}
+
+.contact {
+    background-color: #ebebeb;
+    background-size: cover;
+    /*height:100%; */
+    width: 100%;
+    padding-top: 70px;
+    padding-bottom: 80px;
+}
+
+/*Fin de BG*/
+
+.home .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}

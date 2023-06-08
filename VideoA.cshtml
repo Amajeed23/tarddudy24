@@ -1,0 +1,18 @@
+﻿@{
+    Layout = "";
+}
+<style>
+    .video-scale {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<video id="intro-video" class="video-scale" autoplay>
+    <source src="~/images/AdminLogo.mp4" type="video/mp4">
+</video>
+<script>
+    var video = document.getElementById("intro-video");
+    video.onended = function () {
+        window.location.href = "@Url.Action("Home", "Admin")";
+    };
+</script>

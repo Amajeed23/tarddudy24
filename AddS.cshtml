@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "_Admin";
+}
+
+<html>
+<head>
+    <title>Add Schedule</title>
+    <style>
+        body{
+            color: #E4E5E6;
+        }
+        .cont {
+            position: absolute;
+            top: 30%;
+            left: 35%;
+            width: 30%;
+        }
+            .cont h1 {
+                text-align: center;
+            }
+            .cont #button {
+                margin-left: 35%;
+                width: 30%;
+            }
+    </style>
+</head>
+<body>
+    <div class="cont">
+    <form asp-action="AddS" method="post">
+       
+         
+            <div class="form-group">
+                <label>Station From :</label>
+                <input name="StationFrom" class="form-control" type="text" />
+            </div> <br />
+            <div class="form-group">
+                <label> Station To : </label>
+                <input name="StationTo" class="form-control" type="text"  />
+            </div> <br />
+            <div class="form-group">
+                <label for="stop-duration">Duration:</label>
+                <input name="Time" class="form-control" type="time" />
+
+            </div>
+
+            <br />
+
+
+
+
+            <div class="form-group">
+                <label>Available Buses</label>
+
+                <select name="BusID">
+                    <option value="">-- Select a Bus --</option>
+                    @foreach (var Bus in ViewBag.Bus)
+                    {
+                    if (Bus.BusStatus == true)
+                    {
+                      <option name="BusID" value="@Bus.BusID">@Bus.BusNumber</option>  
+                    }
+                    
+                    }
+                </select>
+
+
+            </div> <br />
+
+
+        
+        <input id="button" type="submit" class="btn btn-primary" value="Add" />
+    </form>
+    </div>
+</body>
+</html>

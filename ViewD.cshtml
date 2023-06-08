@@ -1,0 +1,119 @@
+﻿@{
+    @model List<Driver>
+    Layout = "_Admin";
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veiw Drivers</title>
+    <style>
+        .middle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -400px;
+            margin-left: -100px;
+            color: #E4E5E6;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 70%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -230px;
+            margin-left: -600px;
+            background-color: rgba(0,0,0,0);
+            
+        }
+
+            table th, table td {
+                border: 1px solid #E4E5E6;
+                padding: 8px;
+                text-align: left;
+                color: #E4E5E6;
+            }
+
+            /* Style for the table header */
+            table th {
+                font-weight: bold;
+            }
+
+            /* Style for alternating table rows */
+            table tr {
+                
+            }
+            table a{
+                color: #E4E5E6;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="middle">
+        <h1>Drivers</h1>
+        <p>
+            <a class="btn-close-white" asp-action="AddD">Create new driver</a>
+        </p>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <p>No.</p>
+                </th>
+                <th>
+                    <p>Driver Name</p>
+                </th>
+                <th>
+                    <p>Driver TimeShift</p>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            @{
+                int rowNumber = 1; // initialize the row number to 1
+            }
+            @foreach (var driver in Model)
+            {
+                <tr>
+                    <td>
+                        @rowNumber
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => driver.DriName)
+                    </td>
+                    <td>
+                        @{
+                            if (driver.Drivershift == false)
+                            {
+                                <p>No</p>
+                            }
+                            else
+                            {
+                                <p>Yes</p>
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        <a asp-action="EditD" asp-route-id="@driver.DriID">Edit</a> |
+                        <a asp-action="DeleteD" asp-route-id="@driver.DriID">Delete</a>
+                    </td>
+                </tr>
+                {
+                    rowNumber++; 
+                }
+            }
+        </tbody>
+    </table>
+
+    <script>
+    </script>
+</body>
+</html>

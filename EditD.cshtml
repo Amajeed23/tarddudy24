@@ -1,0 +1,60 @@
+﻿@{
+    @model Driver
+    Layout = "_Admin";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>English numbers</title>
+    <style>
+        body{
+            color: #E4E5E6;
+        }
+        .cont{
+            position:absolute;
+            top:30%;
+            left:35%;
+            width:30%;
+        }
+        .cont h1{ 
+            text-align:center;
+        }
+        .cont button{
+            margin-left:35%;
+            width:30%;
+        }
+    </style>
+</head>
+
+<body dir="ltr">
+    <div class="cont">
+    <h1>Edit Drivers</h1>
+<form asp-action="EditD">
+    <input type="hidden" asp-for="DriID" />
+    <input type="hidden" asp-for="DriPassword" />
+    <input type="hidden" asp-for="Drivershift" />
+     
+        
+    <div class="form-group">
+        <label asp-for="DriName">Driver Name</label>
+        <input asp-for="DriName" class="form-control" readonly/>
+        <span asp-validation-for="DriName" class="text-dark"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DriPhone">Driver Phone</label>
+            <input asp-for="DriPhone" lang="en" dir="ltr" type="number" class="form-control" />
+        <span asp-validation-for="DriPhone" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DriBirth">Driver Birth</label>
+            <input asp-for="DriBirth" lang="en" dir="ltr" type="date" class="form-control" readonly/>
+        <span asp-validation-for="DriBirth" class="text-danger"></span>
+    </div>
+        
+        <div class="error" id="error-msg" style="color:red;">@ViewBag.ErrorMessage</div><br />
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+    </div>
+</body>
+</html>

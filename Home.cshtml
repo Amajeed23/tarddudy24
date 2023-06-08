@@ -1,0 +1,160 @@
+﻿@{
+    Layout = "_Passenger";
+    @model IEnumerable<FirstAttempt.Models.Schedule>
+   
+    var tripSelected = false;
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Passenger Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="~/css/Passenger.css" rel="stylesheet" />
+    <style>
+    </style>
+</head>
+<body>
+    <form asp-action="Home" method="post">
+        
+        <div class="content-T">
+            <main>
+                <br />
+                <div class="card-header">
+                    <div id="selected-trip"></div>
+                    <div>
+                        <p>Welcome @ViewBag.Message</p>
+                        <span id="clock"></span> <br />
+                        <span>Choose Your Trip</span>
+                    </div>
+                </div>
+                <table id="scheduleTable">
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Time</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var schedule in Model)
+                    {
+                        DateTime Today = DateTime.Now;
+                        TimeSpan TodayS = Today.TimeOfDay;
+                        if (schedule.Time > TodayS)
+                        {
+                            @if (tripSelected == false)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>@schedule.StationFrom</td>
+                                        <td>@schedule.StationTo</td>
+                                        <td>@schedule.Time</td>
+                                        <td>$3 <input type="hidden" value="@schedule.ScheduleID" /></td>
+                                        <td>
+                                            @if (schedule.Seat >= 30)
+                                            {
+                                                <button name="ID" type="button" value="@schedule.ScheduleID" data-schedule-id="@schedule.ScheduleID" disabled style="width:100%;">Full</button>
+                                            }
+                                            else
+                                            {
+                                                <button name="ID" type="button" value="@schedule.ScheduleID" data-schedule-id="@schedule.ScheduleID" style="width:100%;">Select</button>
+                                            }
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+                        }
+                    }
+                </table>
+            </main>
+        </div>
+    </form>
+    <!--Selection Modal-->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-body"></p>
+            <div class="modal-buttons">
+
+                <button type="button" id="confirm-button">Confirm</button>
+                <button type="button" id="cancel-button">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+    <!--Rating Check-->
+    @foreach (var rating in ViewBag.rate)
+    {
+        if (rating.Feedback == -1)
+        {
+            <div id="Move">@rating.TicketID</div>
+        }
+    }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        function updateTime() {
+            var clock = document.getElementById("clock");
+            var now = new Date();
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            var seconds = now.getSeconds();
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            var timeString = hours + ':' + minutes + ':' + seconds;
+            clock.innerHTML = timeString;
+        }
+        setInterval(updateTime, 1000);
+
+        $(document).ready(function () {
+            $('button[name="ID"]').click(function () {
+                var scheduleID = $(this).val();
+                var scheduleFrom = $(this).parent().siblings(':nth-child(1)').text();
+                var scheduleTo = $(this).parent().siblings(':nth-child(2)').text();
+                var scheduleTime = $(this).parent().siblings(':nth-child(3)').text();
+                var modalTitle = 'Confirm Trip Selection';
+                var modalBody = 'From: ' + scheduleFrom + '<br>' +
+                    'To: ' + scheduleTo + '<br>' +
+                    'Time: ' + scheduleTime;
+                $('#modal-title').html(modalTitle);
+                $('#modal-body').html(modalBody);
+                $('#confirm-button').attr('data-schedule-id', scheduleID);
+                $('#myModal').css('display', 'block');
+                $('#confirm-button').click(function () {
+                    var confirmedScheduleID = $(this).attr('data-schedule-id');
+                    $.ajax({
+                        url: '/Passenger/Home', // change the URL to the Waiting action
+                        type: 'POST',
+                        data: { scheduleID: confirmedScheduleID },
+                        success: function (result) {
+                            // handle the success response from the server
+                            window.location.href = '/Passenger/Home'; // redirect to the Waiting view
+                        },
+                        error: function (xhr, status, error) {
+                            // handle the error response from the server
+                            console.log(error);
+                        }
+                    });
+                });
+                $('#cancel-button').click(function () {
+                    $('#myModal').css('display', 'none');
+                });
+            });
+        });
+        $(document).ready(function () {
+            
+            var count = @ViewBag.rate.Count;
+            console.log(count);
+            if (count > 0) {
+                var ticketId = $("#Move").text();
+                window.location.href = "/Passenger/Rating/" + ticketId; // Redirect to another action with ticketId parameter
+            }
+        });
+    </script>
+</body>
+</html> 

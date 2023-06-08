@@ -1,0 +1,48 @@
+﻿@{
+    @model Bus
+    Layout = "_Admin";
+}
+<html>
+    <head>
+        <title>Delete Bus</title>
+        <style>
+            body{
+            color: #E4E5E6;
+            }
+        .cont {
+            position: absolute;
+            top: 30%;
+            left: 35%;
+            width: 30%;
+        }
+            .cont h1 {
+                text-align: center;
+            }
+
+            .cont button {
+                margin-left: 35%;
+                width: 30%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="cont">
+    <h1>Delete Bus</h1>
+
+    <h3>Are you sure you want to delete this bus?</h3>
+    <div>
+        <h4>Bus Number : @Model.BusNumber</h4>
+        <h4>Bus Start At : @Model.BusStart</h4>
+        <h4>Duration : @Model.BusWorkhour</h4>
+    </div>
+
+    <form asp-action="DeleteB">
+        <input type="hidden" asp-for="BusID" />
+        <input type="hidden" asp-for="DriID" />
+
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="ViewB" class="btn btn-secondary">Cancel</a>
+    </form>
+    </div>
+    </body>
+</html>

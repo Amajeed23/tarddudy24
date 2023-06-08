@@ -1,0 +1,136 @@
+﻿@model IEnumerable<FirstAttempt.Models.AssignDriver>
+@{
+    Layout = "_Admin";
+
+}
+<html>
+    <head>
+        <title>Assign Drivers</title>
+        <style>
+            body{
+            color: #E4E5E6;
+        }
+
+        .circle {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .circle-false {
+            background-color: red;
+        }
+
+        .circle-true {
+            background-color: green;
+        }
+
+        .table {
+            border-collapse: collapse;
+            width: 70%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -230px;
+            margin-left: -600px;
+            background-color: rgba(0,0,0,0);
+        }
+
+            table th, table td {
+                border: 1px solid #E4E5E6;
+                padding: 8px;
+                text-align: left;
+                color: #E4E5E6;
+            }
+
+            .mid{
+                position:absolute;
+                left:47%;
+                top:20%;
+                margin-top:-40px;
+            }
+        </style>
+    </head>
+    <body>
+
+    <h2 class="mid">Assign</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <p>Bus Number</p>
+                </th>
+                <th>
+                    <p>Bus Start</p>
+                </th>
+                <th>
+                    <p>Bus Duration</p>
+                </th>
+                <th>
+                    <p>Driver</p>
+                </th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int rowNumber = 1; // initialize the row number to 1
+            }
+            @foreach (var Bus in Model)
+            {
+                <tr>
+                    <td>
+                        @rowNumber
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Bus.BusStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Bus.BusWorkhour)
+                    </td>
+                    <td>
+                        @{
+
+                            if (Bus.DriID != null)
+                            {
+                                <p>@Bus.DriName</p>
+                            }
+                            else if (Bus.DriID == 0)
+                            {
+                                <p> - </p>
+
+                            }
+
+
+
+                        }
+
+                    </td>
+                    <td style="width:20%;">
+                        @{
+                            if (Bus.DriID == 0)
+                            {
+                                <a asp-action="Assign" asp-route-id="@Bus.BusID">Assign Driver</a>
+                            }
+                            else
+                            {
+                                <form asp-action="DeleteDB">
+                                    <input asp-action="DeleteDB" type="submit" class="btn-outline-danger" asp-route-BusID="@Bus.BusID" asp-route-DriID="@Bus.DriID" value="Unassign Driver" />
+                                </form>
+                            }
+
+                        }
+                    </td>
+                </tr>
+                {
+                    rowNumber++;
+                }
+            }
+        </tbody>
+    </table>
+
+    </body>
+</html>

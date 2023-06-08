@@ -1,0 +1,91 @@
+﻿@{
+    @model Bus
+    Layout = "_Admin";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Bus</title>
+    <style>
+        body{
+            color: #E4E5E6;
+        }
+
+        .cont {
+            position: absolute;
+            top: 30%;
+            left: 35%;
+            width: 30%;
+        }
+
+            .cont h1 {
+                text-align: center;
+            }
+
+            .cont button {
+                margin-left: 35%;
+                width: 30%;
+            }
+    </style>
+</head>
+
+<body dir="ltr">
+    <div class="cont">
+    <h1>Edit Bus</h1>
+    <form asp-action="EditB">
+        <input type="hidden" asp-for="BusID" />     
+        <input type="hidden" asp-for="DriID" />
+        <div class="form-group">
+            <label asp-for="BusNumber">Bus Number</label>
+            <input asp-for="BusNumber" class="form-control" readonly />
+            <span asp-validation-for="BusNumber" class="text-danger"></span>
+        </div></br>
+        <div class="form-group">
+            <label asp-for="BusStart"> When Will The Bus Start: </label>
+            <input type="time" id="time" asp-for="BusStart" readonly>
+            <span asp-validation-for="BusStart" class="text-danger"></span>
+        </div></br>
+        <div class="form-group">
+            <label for="stop-duration">Stop Duration:</label>
+            <select id="stop-duration" name="stop-duration">
+                <option value="10800">3 hours</option>
+                <option value="21600">6 hours</option>
+            </select>
+        </div></br>
+        <div class="form-group" hidden>
+            <label for="interval">Duration :</label>
+            <input type="time" id="stop-time" asp-for="BusWorkhour" />
+            <span asp-validation-for="BusWorkhour" class="text-danger"></span>
+        </div></br>
+        <div class="form-group" hidden >
+            <label asp-for="BusStatus">Bus Availblity</label>
+            @{
+                if (Model.DriID == 0)
+                {
+                   
+                    <input asp-for="BusStatus" type="checkbox" value="False" checked/>
+                }
+                else
+                {
+                     <input asp-for="BusStatus" type="checkbox" value="True" checked />
+                }
+
+            }
+            
+            <span asp-validation-for="BusStatus" class="text-danger"></span>
+        </div></br>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    </div>
+    <script>
+        const select = document.querySelector('#stop-duration');
+        const input = document.querySelector('#stop-time');
+        select.addEventListener('change', function () {
+            const duration = parseInt(select.value);
+            const date = new Date(duration * 1000);
+            input.value = date.toISOString().substr(11, 8);
+        });
+    </script>
+</body>
+</html>

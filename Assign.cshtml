@@ -1,0 +1,75 @@
+﻿@{
+    @model IEnumerable<Bus>
+    Layout = "_Admin";
+}
+<html>
+    <head>
+        <title>Assign</title>
+        <style>
+            body{
+            color: #E4E5E6;
+            }
+
+        .cont {
+            position: absolute;
+            top: 30%;
+            left: 35%;
+            width: 30%;
+        }
+
+            .cont h1 {
+                text-align: center;
+            }
+
+            .cont button {
+                margin-left: 35%;
+                width: 30%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="cont">
+        <form asp-action="Assign" method="post">
+            @foreach (var Bus in ViewBag.Bus)
+            {
+                <input type="hidden" name="BusID" value="@Bus.BusID" />
+                <div class="form-group">
+                    <label>Bus Number</label>
+                    <input value="@Bus.BusNumber" class="form-control" readonly />
+                </div> <br />
+                <div class="form-group">
+                    <label> Start At : </label>
+                    <input value="@Bus.BusStart" class="form-control" readonly />
+                </div> <br />
+                <div class="form-group">
+                    <label for="stop-duration">Duration:</label>
+                    <input value="@Bus.BusWorkhour" class="form-control" readonly />
+
+                </div>
+
+                <br />
+
+
+
+
+                <div class="form-group">
+                    <label>Available Drivers</label>
+
+                    <select name="DriID">
+                        <option value="">-- Select a driver --</option>
+                        @foreach (var dr in ViewBag.Driver)
+                        {
+                            <option name="DriID" value="@dr.DriID">@dr.DriName</option>
+                        }
+                    </select>
+
+
+                </div> <br />
+
+
+            }
+            <input type="submit" class="btn btn-primary" value="Add" />
+        </form>
+        </div>
+    </body>
+</html>

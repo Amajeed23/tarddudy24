@@ -1,0 +1,176 @@
+﻿@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bus Driver Home</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="~/css/driver.css" rel="stylesheet" />
+    <style>
+        body {
+            background: url(https://wallpaperaccess.com/full/16676.jpg);
+        }
+    </style>
+</head>
+<body>
+    <div class="center">
+        <div class="article-card">
+            <div class="content">
+
+                @foreach (var bus in ViewBag.Bus)
+                {
+
+                    <p class="date">Bus Information</p>
+                    <p class="title">Bus Number : @bus.BusNumber</p>
+                    break;
+                }
+            </div>
+            <img src="https://images.unsplash.com/photo-1573385950344-f420ef03ac95?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=736&q=80" alt="article-cover" />
+        </div>
+    </div>
+    <div class="shift">
+        <div class="shift-card">
+            <div class="content">
+                @foreach (var bus in ViewBag.Bus)
+                {
+                    
+                    TimeSpan Start = bus.BusStart - new TimeSpan(0, 5, 0);
+                    
+                    <p class="date">Shift Information</p>
+                    <p class="title">Start : @Start</p>
+
+                }
+                @{
+                    TimeSpan i = new TimeSpan(0, 0, 0);
+                    @foreach (var shift in ViewBag.Schedule)
+                    {
+                        TimeSpan greatestTime = shift.Time;
+
+                        while (i < greatestTime)
+                        {
+                            i = greatestTime + new TimeSpan(0, 15, 0);
+                        }
+
+
+                    }
+                    <p class="title">End At : @i</p>
+                }
+            </div>
+            <img src="https://images.unsplash.com/photo-1620400588895-9b3c4ae9bdb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80" alt="article-cover" />
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="watch">
+            <div class="strap strap-top">
+                <div class="mesh"></div>
+                <div class="mesh"></div>
+                <div class="mesh"></div>
+                <div class="mesh"></div>
+                <div class="mesh"></div>
+            </div>
+            <div class="case">
+                <div class="crown"></div>
+                <div class="power"><span class="title" id="clock"></span></div>
+            </div>
+            <div class="strap strap-bottom">
+                <div class="mesh"></div>
+                <div class="mesh"></div>
+                <div class="mesh"></div>
+                <div class="mesh"></div>
+                <div class="mesh"></div>
+            </div>
+        </div>
+    </div>
+    <div class="logout">
+        <a asp-controller="Home" asp-action="Logout">Logout</a>
+    </div>
+    @foreach (var shift in ((IEnumerable<Schedule>)ViewBag.Schedule).Cast<Schedule>())
+    {
+        <div class="grid">
+            <label class="card">
+                <input class="card__input" type="checkbox" onclick="return false;" />
+                <div class="card__body">
+                    <div class="card__body-cover">
+                        <img class="card__body-cover-image" src="https://freepngdownload.com/image/thumb/bus-png.png" /><span class="card__body-cover-checkbox">
+                            <svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
+                                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                            </svg>
+                        </span>
+                    </div>
+                    <header class="card__body-header">
+                        @if (shift == ((IEnumerable<Schedule>)ViewBag.Schedule).Cast<Schedule>().First())
+                        {
+                            <h4 class="card__body-header-title">@shift.StationFrom To @shift.StationTo <br> @shift.Time Seat: @shift.Seat /30</h4>
+                            int rowNumber = 0;
+                            foreach (var C in ViewBag.Condition)
+                            {
+                                if (C.ScheduleID == shift.ScheduleID)
+                                {
+                                    rowNumber++;
+                                }
+                            }
+                            <h2 class="card__body-header-subtitle">@rowNumber Passenger With Condition!</h2>
+                        }
+                        else
+                        {
+                            {
+                                <h4 class="card__body-header-title">@shift.StationFrom To @shift.StationTo <br> @shift.Time Seat: @shift.Seat /30</h4>
+                                int rowNumber = 0;
+                                foreach (var C in ViewBag.Condition)
+                                {
+                                    if (C.ScheduleID == shift.ScheduleID)
+                                    {
+
+                                        rowNumber++;
+
+
+                                    }
+                                }
+                                <h2 class="card__body-header-subtitle">@rowNumber Passenger With Condition!</h2>
+                            }
+                        }
+                    </header>
+                </div>
+            </label>
+        </div>
+        <script>
+            function updateTime() {
+                var now = new Date();
+                var checkboxes = document.querySelectorAll(".card__input");
+                function getSignedDiff(date1, date2) {
+                    return date1.getTime() - date2.getTime();
+                }
+                checkboxes.forEach(function (checkbox) {
+                    var timeString = checkbox.parentNode.querySelector(".card__body-header-title").innerText.match(/\d+:\d+/)[0];
+                    var timeParts = timeString.split(":");
+                    var tripTime = new Date();
+                    tripTime.setHours(timeParts[0]);
+                    tripTime.setMinutes(timeParts[1]);
+
+                    if (getSignedDiff(tripTime, now) <= 300001 && getSignedDiff(tripTime, now) > -899999) {
+                        checkbox.checked = true;
+                    } else {
+                        checkbox.checked = false;
+                    }
+
+                    console.log(getSignedDiff(tripTime, now));
+                });
+
+                var clock = document.getElementById("clock");
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+                var seconds = now.getSeconds();
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                var timeString = hours + ':' + minutes + ':' + seconds;
+                clock.innerHTML = timeString;
+            }
+
+            setInterval(updateTime, 1000);
+        </script>
+    }
+</body>
+</html>

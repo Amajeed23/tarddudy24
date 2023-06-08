@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FirstAttempt.styles.css" asp-append-version="true" />
+    <style>
+        @@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
+
+body {
+            font-family: 'QuickSand',sans-serif;
+            
+            
+        }
+
+.wrapper {
+  width: 95%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+header {
+            background-color: rgba(0,0,0,0);
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+  color: black;
+  position: relative;
+  padding: 1em 0;
+  border-bottom:solid 1px black;
+            border-left: solid 1px black;
+            border-right: solid 1px black;
+  width:50%;
+  left:25%;
+}
+
+header::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.logo {
+  float: left;
+  font-size: 1rem;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.logo span {
+  font-weight: 400;
+}
+
+.main-nav {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  background: red;
+  height: 0;
+  overflow: hidden;
+}
+
+.main-nav-open {
+  height: auto;
+}
+
+.main-nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-nav li {
+  border-bottom: 1px solid #575766;
+}
+
+.main-nav li:last-child {
+  border-bottom: none;
+} 
+
+
+.main-nav a {
+  color: black;
+  display: block;
+  padding: 1em 1em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.main-nav a:hover,
+.main-nav a:focus{
+  background: #e4b363;
+  color: #464655; 
+}
+
+.nav-icon {
+  display: inline-block;
+  font-size: 1.3em;
+  margin-right: .5em;
+  text-align: center;
+  width: 1.1em;
+  color: rgba(255,255,255,0.45);
+}
+
+.menu-toggle {
+  padding: 1em;
+  position: absolute;
+  top: 0.5em;
+  right: 0.2em;
+  cursor: pointer;
+}
+
+.hamburger,
+.hamburger::before,
+.hamburger::after{
+  content: "";
+  display: block;
+  background: #ebebd3;
+  height: 3px;
+  width: 1.75em;
+  transition: all ease-in-out 500ms;
+}
+
+.hamburger::before {
+  transform: translateY(-6px);
+}
+
+.hamburger::after {
+  transform: translateY(3px);
+}
+
+.open .hamburger {
+  transform: rotate(45deg) ;
+}
+
+.open .hamburger::before {
+  opacity: 0;
+}
+
+.open .hamburger::after {
+  transform: rotate(90deg) translateY(3px);
+}
+
+@@media only screen and (min-width: 700px){
+  .menu-toggle {
+    display: none;
+  }
+  
+  .main-nav {
+    height: auto;
+    position: relative;
+    background: transparent;
+    float: right;
+  }
+  
+  .main-nav li {
+    display: inline-block;
+    border: none;
+  }
+  
+  .main-nav a {
+    padding: 0;
+    margin-left: 2em;
+  }
+  
+  .main-nav a:hover,.main-nav a:focus {
+    background: transparent;
+  }
+  
+  .nav-icon {
+    display: none;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="wrapper">
+            <h1 class="logo"><span><a asp-action="Home" style="text-decoration:none;color:black;font:bold;">Tarddudy</a></span></h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a asp-action="TicketH"><i class="fa fa-home nav-icon"></i>History</a></li>
+                    <li><a asp-action="Account"><i class="fa fa-info nav-icon"></i>Settings</a></li>
+                    <li><a asp-controller="Home" asp-action="Logout"><i class="fa fa-usd nav-icon"></i>Logout</a></li>  
+                </ul>
+            </nav>
+
+            <div class="menu-toggle">
+                <div class="hamburger"></div>
+            </div>
+
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(window).ready(function(){
+  $('.menu-toggle').click(function(){
+    //console.log(2);
+    $('.main-nav').toggleClass('main-nav-open',500);
+    $(this).toggleClass('open');
+  });
+});
+ </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

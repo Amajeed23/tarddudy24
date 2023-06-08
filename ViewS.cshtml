@@ -1,0 +1,141 @@
+﻿@{
+    @model IEnumerable<FirstAttempt.Models.Schedule>
+    Layout = "_Admin";
+}
+<html>
+    <head>
+        <title>Schedule</title>
+        <style>
+            body{
+            color: #E4E5E6;
+            
+            }
+
+        .table {
+            border-collapse: collapse;
+            width: 70%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -230px;
+            margin-left: -600px;
+            background-color: rgba(0,0,0,0);
+            outline:solid;
+        }
+
+            .table th, .table td {
+                border: 1px solid #E4E5E6;
+                padding: 8px;
+                text-align: left;
+                color: #E4E5E6;
+            }
+
+            .table a {
+                color: #E4E5E6;
+            }
+
+        .mid {
+            position: absolute;
+            left: 47%;
+            top: 20%;
+            margin-top: -40px;
+            text-align:center;
+           
+        }
+        .mid h1,a{
+                color: #E4E5E6;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="mid">
+        <h1>Schedule</h1>
+        <p>
+            <a asp-action="AddS">Add More Route</a>
+        </p>
+        </div>
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>
+                    <p>Trip Number</p>
+                </th>
+                <th>
+                    <p>From</p>
+                </th>
+                <th>
+                    <p>To</p>
+                </th>
+                <th>
+                    <p>Time</p>
+                </th>
+                <th>
+                    <p>Bus</p>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int rowNumber = 1; // initialize the row number to 1
+            }
+            @foreach (var schedule in Model)
+            {
+                <tr>
+                    <td>
+                       @rowNumber
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => schedule.StationFrom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => schedule.StationTo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => schedule.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => schedule.BusID)
+
+                    </td>
+                    <td>
+                        <a id="editButton" asp-action="EditS" asp-route-id="@schedule.ScheduleID">Edit</a> |
+                        <a asp-action="DeleteS" asp-route-id="@schedule.ScheduleID" asp-route-BusID="@schedule.BusID">Delete</a>
+                    </td>
+                </tr>
+                rowNumber++;
+            }
+        </tbody>
+    </table>
+    <script>
+        window.onload = function () {
+            // Get the time of the trip from the server or from a variable
+            var tripTimeString = '<?php echo $Time; ?>'; // Example: $tripTime = '15:00:00'
+            var tripTimeParts = tripTimeString.split(':');
+            var tripTime = new Date();
+            tripTime.setHours(tripTimeParts[0], tripTimeParts[1], tripTimeParts[2], 0); // Set the trip time to 3:00 PM
+
+            // Get the current time in the user's time zone
+            var currentTime = new Date();
+
+            // Set the year, month, and date of the trip time to the current year, month, and date
+
+
+            // Calculate the time remaining until the trip in milliseconds
+            var timeRemaining = tripTime.getTime() - currentTime.getTime();
+
+            // Calculate the time remaining without the day, month, and year
+
+
+            // Display the time remaining without the day, month, and year
+
+
+            // If there is 30 minutes or less left until the trip, make the edit button read-only
+            if (timeRemaining <= 30 * 60 * 1000) { // 30 minutes in milliseconds
+                document.getElementById('editButton').setAttribute('readonly', true);
+            }
+        };
+    </script>
+    </body>
+</html>
+

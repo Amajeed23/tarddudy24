@@ -1,0 +1,87 @@
+﻿body {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1920' height='1080' preserveAspectRatio='none' viewBox='0 0 1920 1080'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1124%26quot%3b)' fill='none'%3e%3crect width='1920' height='1080' x='0' y='0' fill='rgba(186%2c 233%2c 206%2c 1)'%3e%3c/rect%3e%3cpath d='M0%2c550.638C125.965%2c572.412%2c262.262%2c643.956%2c374.374%2c582.537C486.241%2c521.253%2c514.473%2c373.362%2c548.162%2c250.337C577.845%2c141.941%2c556.27%2c32.478%2c555.775%2c-79.908C555.187%2c-213.435%2c625.348%2c-365.594%2c544.982%2c-472.229C465.139%2c-578.17%2c303.858%2c-568.24%2c172.708%2c-588.189C57.204%2c-605.758%2c-56.23%2c-604.844%2c-170.62%2c-581.077C-293.635%2c-555.518%2c-423.763%2c-532.789%2c-514.118%2c-445.486C-607.811%2c-354.958%2c-648.431%2c-224.752%2c-672.01%2c-96.62C-696.295%2c35.348%2c-724.861%2c185.318%2c-650.79%2c297.206C-577.592%2c407.774%2c-423.076%2c417.934%2c-299.513%2c466.052C-200.844%2c504.476%2c-104.34%2c532.602%2c0%2c550.638' fill='%2374d39c'%3e%3c/path%3e%3cpath d='M1920 1922.415C2081.827 1936.761 2249.95 1893.296 2380.725 1796.902 2507.928 1703.141 2559.563 1545.801 2625.669 1402.268 2691.992 1258.2649999999999 2778.7309999999998 1116.328 2766.991 958.221 2754.9 795.3879999999999 2689.294 625.38 2560.529 524.979 2436.869 428.55899999999997 2260.048 477.14099999999996 2106.886 443.524 1967.61 412.95500000000004 1843.333 320.13800000000003 1701.68 336.471 1547.983 354.193 1410.9940000000001 436.42499999999995 1293.6770000000001 537.288 1162.509 650.059 1032.975 778.511 992.044 946.58 949.502 1121.263 966.657 1320.282 1066.592 1469.738 1162.67 1613.426 1356.2440000000001 1638.623 1508.942 1719.6190000000001 1646.7069999999999 1792.694 1764.663 1908.645 1920 1922.415' fill='white'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1124'%3e%3crect width='1920' height='1080' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+}
+/* Set up the container for the animation */
+.container {
+    position: fixed;
+    width: 50%;
+    height: 150px;
+    overflow: hidden;
+    background-color:white;
+    border-radius:80%;
+    top:50%;
+    left:25%;
+    outline:solid;
+}
+
+/* Set up the stations */
+.station {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #333;
+    top: 65px; /* adjust the top position as needed */
+    
+}
+
+    .station.from {
+        left: 0px; /* adjust the left position as needed */
+        
+        
+    }
+        .station.from p {
+            position: fixed;
+            top: 53.8%;
+            left: 20%;
+            font-size: 25px;
+            font-family:'Agency FB';
+        }
+
+    .station.to {
+        right: 0px; /* adjust the right position as needed */
+    }
+    .station.to p {
+        position: fixed;
+        top: 53.8%;
+        left: 75.3%;
+        font-size: 25px;
+        font-family: 'Agency FB';
+    }
+
+/* Set up the bus icon */
+.bus {
+    position: absolute;
+    top: 50%;
+    left: 20px; /* adjust the left position to match the from station */
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background-image: url('../images/bus.gif'); /* replace this with your own bus icon */
+    background-size: cover;
+    animation: bus-move 7s linear infinite;
+    
+}
+
+/* Set up the animation */
+@keyframes bus-move {
+    0% {
+        left: 80px; /* adjust the left position to match the from station */
+    }
+
+    50% {
+        transform: translateX(50%); /* move the bus to the right side */
+    }
+
+    100% {
+        left: calc(100% - 70px); /* adjust the left position to match the to station */
+    }
+}
+.Time{
+    position:fixed;
+    top:35%;
+    left:40%;
+    font-size:25px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}

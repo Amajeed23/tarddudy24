@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "";
+    @foreach (var a in ViewBag.Schedule)
+    {
+        ViewBag.Sch = a.ScheduleID;
+    }
+}
+<html>
+<head>
+    <title>Waiting Room</title>
+    <link href="~/css/waiting.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="TT">
+        <p>Current time: <span id="clock"></span></p>
+        <a class="cancel-button" asp-action="CancelT" asp-route-id="@ViewBag.PassID" asp-route-Sch="@ViewBag.Sch">Cancel</a>
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @foreach (var schedule in ViewBag.Schedule)
+                    {
+                        <td hidden>@schedule.ScheduleID</td>
+                        <td>@schedule.StationFrom</td>
+                        <td>@schedule.StationTo</td>
+                        <td>@schedule.Time</td>
+                    }
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div class="loader-wrapper">
+        <div class="truck-wrapper">
+            <div class="truck">
+                <div class="truck-container"></div>
+                <div class="glases"></div>
+                <div class="bonet"></div>
+
+                <div class="base"></div>
+
+                <div class="base-aux"></div>
+                <div class="wheel-back"></div>
+                <div class="wheel-front"></div>
+
+                <div class="smoke"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkTime() {
+            console.log('checkTime() executed');
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+            var timeString = hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
+            var tableRows = document.querySelectorAll('table tr');
+            clock.innerHTML = timeString;
+            for (var i = 0; i < tableRows.length; i++) {
+                var timeCell = tableRows[i].querySelector('td:last-child');
+                var scheduleIdCell = tableRows[i].querySelector('td:first-child');
+                if (timeCell && timeCell.textContent.trim() <= timeString) {
+                    var scheduleId = scheduleIdCell.textContent.trim();
+                    window.location.href = '/Passenger/Travel/' + scheduleId; // modify the URL to include the ScheduleID
+                    break;
+                }
+            }
+        }
+        setInterval(checkTime, 1000);
+    </script>
+</body>
+</html>

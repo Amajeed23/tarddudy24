@@ -1,0 +1,70 @@
+﻿@{
+    @model Driver
+    Layout = "_Admin";
+}
+<html>
+<head>
+    <title>Add Driver</title>
+    <style>
+        body{
+            color: #E4E5E6;
+            
+        }
+        .center{
+            width:50%;
+            position:fixed;
+            top:30%;
+            left:25%;
+        }
+    </style>
+</head>
+<body>
+    
+    <form asp-action="AddD" method="post">
+        <div class="center">
+            <h1>Add New Driver</h1>
+        <div class="form-group">
+            <label asp-for="DriName">Driver Name</label>
+            <input asp-for="DriName" class="form-control" />
+            <span asp-validation-for="DriName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DriPassword">Driver Password</label>
+            <input asp-for="DriPassword" type="password" class="form-control" />
+            <span asp-validation-for="DriPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DriPhone">Driver Phone</label>
+            <input asp-for="DriPhone" type="number" class="form-control" />
+            <span asp-validation-for="DriPhone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DriBirth">Driver BirthDate</label>
+                <input asp-for="DriBirth" id="user" type="date" class="form-control" onblur="validateBirthDate()" />
+                <span asp-validation-for="DriBirth" id="birthdate-error" class="text-danger" style="display:none">Must Be Above 20 Years Old</span>
+        </div>
+        <div class="form-group" hidden>
+            <label asp-for="Drivershift">Driver BirthDate</label>
+                <input asp-for="Drivershift" type="checkbox" value="False" class="form-control" />
+                <span asp-validation-for="Drivershift" class="text-danger"></span>
+        </div>
+        <div class="error" id="error-msg" style="color:red;">@ViewBag.ErrorMessage</div><br />
+            <input type="submit" id="Reg" class="btn btn-primary" value="Add" />
+        </div>
+    </form>
+    <script>
+        function validateBirthDate() {
+            var birthdate = document.getElementById("user").value;
+            var birthyear = new Date(birthdate).getFullYear();
+            if (birthyear > 2003) {
+                document.getElementById("birthdate-error").style.display = "block";
+                document.getElementById("Reg").disabled = true;
+            } else {
+                document.getElementById("birthdate-error").style.display = "none";
+                document.getElementById("Reg").disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+﻿@{
+    @model Driver
+    Layout = "_Admin";
+}
+<html>
+    <head>
+        <title>Delete Driver</title>
+        <style>
+        body {
+            color: #E4E5E6;
+        }
+
+        .cont {
+            position: absolute;
+            top: 20%;
+            left: 35%;
+            width: 30%;
+        }
+
+            .cont h1 {
+                text-align: center;
+                margin-bottom:100px;
+            }
+
+            .btnn  button,a{
+                margin-top:10%;
+                width: 30%;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div class="cont">
+        <h1>Delete Driver</h1>
+
+        <h3>Are you sure you want to delete this driver?</h3>
+        <div>
+            <h4>Driver ID: @Model.DriID</h4>
+            <h4>Name: @Model.DriName</h4>
+            <h4>Phone Number: 0@(Model.DriPhone)</h4>
+        </div>
+
+        <form asp-action="DeleteD">
+            <input type="hidden" asp-for="DriID" />
+            <div class="btnn">
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="ViewD" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+        </div>
+   
+    </body>
+</html>

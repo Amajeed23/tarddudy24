@@ -1,0 +1,243 @@
+﻿@{
+    Layout = "";
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Passenger Register - Bus Reservation System</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+		body {
+			background-image: url(../../wwwroot/images/busbg2.jpg);
+			background-size: cover;
+			background-position: center;
+			font-family: Arial, sans-serif;
+		}
+
+		.container {
+			margin: 50px auto;
+			max-width: 500px;
+			padding: 20px;
+			background-color: rgba(255, 255, 255, 0.8);
+			border-radius: 10px;
+			box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+			animation: fadein 1s;
+		}
+
+		@@keyframes fadein {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+
+		h1 {
+			font-size: 36px;
+			margin-top: 0;
+			text-align: center;
+			color: #4CAF50;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding-top: 20px;
+			
+		}
+
+		.input-container {
+			position: relative;
+			margin-bottom: 30px;
+		}
+
+		input {
+			width: 100%;
+			padding: 10px 0;
+			font-size: 16px;
+			font-weight: bold;
+			color: #333;
+			background: none;
+			border: none;
+			border-bottom: 2px solid #4CAF50;
+			outline: none;
+			transition: border-color 0.2s ease;
+		}
+
+			input:focus ~ label,
+			input:valid ~ label {
+				top: -20px;
+				font-size: 14px;
+				color: #4CAF50;
+				transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+			}
+
+		label {
+			position: absolute;
+			top: 8px;
+			left: 0;
+			font-size: 16px;
+			color: #999;
+			pointer-events: none;
+			transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+		}
+
+		input[type=submit] {
+			background-color: #4CAF50;
+			color: #fff;
+			padding: 12px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+			font-weight: bold;
+			letter-spacing: 1px;
+			transition: background-color 0.2s ease;
+		}
+
+			input[type=submit]:hover {
+				background-color: #3e8e41;
+			}
+
+		.link {
+			font-size: 14px;
+			color: #666;
+			text-decoration: none;
+			margin-top: 10px;
+		}
+
+			.link:hover {
+				color: #4CAF50;
+			}
+
+        input:focus ~ #username1,
+        input:valid ~ #username1 {
+		
+			top: -20px;
+			font-size: 14px;
+			color: #4CAF50;
+			transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+		}
+		#username1{
+			position: absolute;
+			top: -6px;
+			left: 0;
+			font-size: 16px;
+			color: #999;
+			pointer-events: none;
+			transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+		}
+		#user{
+			width: 100%;
+			padding: 10px 0;
+			font-size: 16px;
+			font-weight: bold;
+			color: #333;
+			background: none;
+			border: none;
+			border-bottom: 2px solid #4CAF50;
+			outline: none;
+			transition: border-color 0.2s ease;
+		}
+
+		select {
+			width: 100%;
+			padding: 10px 0;
+			font-size: 16px;
+			font-weight: bold;
+			color: #333;
+			background: none;
+			border: none;
+			border-bottom: 2px solid #4CAF50;
+			outline: none;
+			transition: border-color 0.2s ease;
+
+		}
+
+			select:focus {
+				outline: none;
+				border-color: #3498db;
+			}
+
+		select option {
+			padding: 10px;
+			font-size: 16px;
+		}
+		#condition{
+			position: absolute;
+			top: -20px;
+			left: -80px;
+			font-size: 16px;
+			text-align:left;
+			width:500px;
+			color: #999;
+			pointer-events: none;
+			transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+		}
+
+		.error-message {
+			color: red;
+			font-size: 0.8em;
+			margin-top: 5px;
+		}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Passenger Registration</h2>
+		<div class="bg-image"></div>
+        <form asp-action="register">
+			<div class="input-container">
+				<input type="text" id="username" name="na" required>
+				<label for="username">Username</label>
+			</div>
+			<div class="input-container">
+				<input type="password" id="username" name="pass" required>
+				<label for="username">Password</label>
+			</div>
+			<div class="input-container">
+				<input type="password" id="username" name="pass2" required>
+				<label for="username">Confirm Password</label>
+			</div>
+			<div class="input-container">
+				<input type="tel" id="username" name="phone" required>
+				<label for="phone">Phone number</label>
+			</div>
+			<div class="input-container">
+				<input type="date" id="user" name="birth" required onblur="validateBirthDate()">
+				<label for="username" id="username1">Birth</label>
+				<div id="birthdate-error" class="error-message" style="display:none;">You Must Be Older Than 16 Y</div>
+			</div>
+			<div class="input-container">
+                <label for="condition" id="condition">Do you have a medical condition?</label>
+				<select  name="condition" class="animated-select">
+					<option value="0">No</option>
+					<option value="1">Yes</option>
+				</select>
+			</div>
+			<div class="error" id="error-msg" style="color:red;">@ViewBag.ErrorMessage</div>
+			<input type="submit" value="Register" id="Reg">
+			
+			<a asp-action="login" class="link">Sign In</a>
+			</form>
+			</div>
+			<script>
+		function validateBirthDate() {
+			var birthdate = document.getElementById("user").value;
+			var birthyear = new Date(birthdate).getFullYear();
+			if (birthyear > 2007) {
+				document.getElementById("birthdate-error").style.display = "block";
+				document.getElementById("Reg").disabled=true;
+			} else {
+				document.getElementById("birthdate-error").style.display = "none";
+				document.getElementById("Reg").disabled = false;
+			}
+		}
+			</script>
+</body>
+</html>

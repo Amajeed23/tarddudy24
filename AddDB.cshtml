@@ -1,0 +1,59 @@
+﻿@{
+    @model List<Bus>
+    Layout = "_Admin";
+
+}
+<html>
+    <head>
+        <title>Add Driver To Bus</title>
+    </head>
+    <body>
+
+    </body>
+</html>
+<h1>Assign Driver</h1>
+
+<form asp-action="AddDB" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <p>Bus Number</p>
+                </th>
+                <th>
+                    <p>Bus Start</p>
+                </th>
+                <th>
+                    <p>Driver</p>
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Bus in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Bus.BusNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Bus.BusStart)
+                    </td>
+                    
+                    
+                    <td>
+                        <label for="driver-select">Select a driver:</label>
+                        <select name="DriverId" id="driver-select">
+                           
+                                <option value="@Bus.DriID"></option>
+                            
+                        </select>
+                    </td>
+
+                </tr>
+}
+            </tbody>
+        </table>
+        <input type="submit" class="btn btn-primary" value="Assign" />
+            
+</form>

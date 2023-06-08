@@ -1,0 +1,137 @@
+﻿@{
+    @model List<Bus>
+    Layout = "_Admin";
+}
+<html>
+    <head>
+        <title>View Bus</title>
+    <style>
+        body {
+            color: #E4E5E6;
+        }
+
+        .circle {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .circle-false {
+            background-color: red;
+        }
+
+        .circle-true {
+            background-color: green;
+        }
+
+        .cont {
+            position: absolute;
+            top: 15%;
+            left: 25%;
+            width: 50%;
+            color: #E4E5E6;
+        }
+
+            .cont h1 {
+                text-align: center;
+                color: #E4E5E6;
+            }
+
+            .cont button {
+                margin-left: 35%;
+                width: 30%;
+                color: #E4E5E6;
+            }
+
+        .table {
+            border-collapse: collapse;
+            width: 70%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -230px;
+            margin-left: -600px;
+            background-color: rgba(0,0,0,0);
+            outline: solid;
+        }
+
+            .table th, .table td {
+                border: 1px solid #E4E5E6;
+                padding: 8px;
+                text-align: left;
+                color: #E4E5E6;
+            }
+
+            .table a {
+                color: #E4E5E6;
+            }
+        .cont a{
+                color: #E4E5E6;
+                position:absolute;
+                left:45%;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="cont">
+    <h1>Bus</h1>
+
+    <p>
+        <a asp-action="AddB">Add new Bus</a>
+    </p>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <p>Bus Number</p>
+                </th>
+                <th>
+                    <p>Bus Start</p>
+                </th>
+                <th>
+                    <p>Bus Duration</p>
+                </th>
+                <th>
+                    <p>Bus Availablilty</p>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+                @{
+                    int rowNumber = 1; // initialize the row number to 1
+                }
+            @foreach (var Bus in Model)
+            {
+                <tr>
+                    <td>
+                            @rowNumber
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Bus.BusStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Bus.BusWorkhour)
+                    </td>
+                    <td>
+                        <span class="circle @((Bus.BusStatus) ? "circle-true" : "circle-false")"></span>
+
+                    </td>
+                    <td>
+                        <a asp-action="EditB" asp-route-id="@Bus.BusID">Edit</a> |
+                        <a asp-action="DeleteB" asp-route-id="@Bus.BusID">Delete</a>
+
+                    </td>
+                </tr>
+                    {
+                        rowNumber++;
+                    }
+            }
+        </tbody>
+    </table>
+    </body>
+</html>
+

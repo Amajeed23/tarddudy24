@@ -1,0 +1,81 @@
+﻿@{
+    @model Bus
+    Layout = "_Admin";
+}
+
+<html>
+<head>
+    <title>Add Bus</title>
+    <style>
+        body {
+            color: #E4E5E6;
+        }
+
+        .cont {
+            position: absolute;
+            top: 30%;
+            left: 35%;
+            width: 30%;
+            text-align:center;
+        }
+
+            .cont h1 {
+                text-align: center;
+            }
+
+            .cont .button {
+                width: 30%;
+                background-color:powderblue;
+            }
+    </style>
+</head>
+<body>
+    <div class="cont">
+    <h1>Add New Bus</h1>
+<form asp-action="AddB" method="post">
+    <div class="form-group">
+        <label asp-for="BusNumber">Bus Number</label>
+        <input style="width:20%;position:relative;left:40%;text-align:center;" asp-for="BusNumber" type="number" class="form-control" required/>
+        <span asp-validation-for="BusNumber" class="text-danger"></span>
+    </div></br>
+    <div class="form-group">
+        <label asp-for="BusStart"> When Will The Bus Start: </label>     <br />
+                <input type="time" id="time" asp-for="BusStart" readonly value="23:30:00" style="text-align:center;">
+        <span asp-validation-for="BusStart" class="text-danger"></span>  
+    </div></br>
+    <div class="form-group">
+                <label for="stop-duration">Stop Duration:</label><br />
+        <select id="stop-duration" name="stop-duration">
+            <option value="" disabled selected>Select Duration </option>
+            <option value="10800">3 hours</option>
+            <option value="21600">6 hours</option>
+        </select>
+    </div></br>
+    <div class="form-group" hidden >
+        <label for="interval">Duration :</label>
+        <input type="time" id="stop-time" asp-for="BusWorkhour" />
+        <span asp-validation-for="BusWorkhour" class="text-danger"></span>
+    </div></br>
+    <div class="form-group" hidden>
+        <label asp-for="BusStatus">Bus Availblity</label>
+        <input asp-for="BusStatus" type="checkbox" value="True" class="form-control" />
+        <span asp-validation-for="BusStatus" class="text-danger"></span>
+    </div>
+    <div class="form-group" hidden>
+        <input asp-for="DriID" type="number" value="3" class="form-control" />
+        <span asp-validation-for="DriID" class="text-danger"></span>
+    </div>
+    <input type="submit" class="button" value="Add" />
+</form>
+    </div>
+<script>
+    const select = document.querySelector('#stop-duration');
+    const input = document.querySelector('#stop-time');
+    select.addEventListener('change', function () {
+        const duration = parseInt(select.value);
+        const date = new Date(duration * 1000);
+        input.value = date.toISOString().substr(11, 8);
+    });
+    </script>
+</body>
+</html>

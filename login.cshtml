@@ -1,0 +1,134 @@
+﻿@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Passenger Login - Bus Reservation System</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		body {
+			background-image: url('../../wwwroot/images/busbg2.jpg');
+			background-size: cover;
+			background-position: center;
+			font-family: Arial, sans-serif;
+		}
+
+		.container {
+			margin: 50px auto;
+			max-width: 500px;
+			padding: 20px;
+			background-color: rgba(255, 255, 255, 0.8);
+			border-radius: 10px;
+			box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+			animation: fadein 1s;
+		}
+
+		@@keyframes fadein {
+			from { opacity: 0; }
+			to   { opacity: 1; }
+		}
+
+		h1 {
+			font-size: 36px;
+			margin-top: 0;
+			text-align: center;
+			color: #4CAF50;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding-top: 20px;
+		}
+
+		.input-container {
+			position: relative;
+			margin-bottom: 30px;
+		}
+
+		input {
+			width: 100%;
+			padding: 10px 0;
+			font-size: 16px;
+			font-weight: bold;
+			color: #333;
+			background: none;
+			border: none;
+			border-bottom: 2px solid #4CAF50;
+			outline: none;
+			transition: border-color 0.2s ease;
+		}
+
+		input:focus ~ label,
+		input:valid ~ label {
+			top: -20px;
+			font-size: 14px;
+			color: #4CAF50;
+			transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+		}
+
+		label {
+			position: absolute;
+			top: 8px;
+			left: 0;
+			font-size: 16px;
+			color: #999;
+			pointer-events: none;
+			transition: top 0.2s ease, font-size 0.2s ease, color 0.2s ease;
+		}
+
+		input[type=submit] {
+			background-color: #4CAF50;
+			color: #fff;
+			padding: 12px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 16px;
+			font-weight: bold;
+			letter-spacing: 1px;
+			transition: background-color 0.2s ease;
+		}
+
+		input[type=submit]:hover {
+			background-color: #3e8e41;
+		}
+
+		.link {
+			font-size: 14px;
+			color: #666;
+			text-decoration: none;
+			margin-top: 10px;
+		}
+
+		.link:hover {
+			color: #4CAF50;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Login</h1>
+		<form asp-action="login">
+			<div class="input-container">
+				<input type="text" id="username" name="na" required>
+				<label for="username">Username</label>
+			</div>
+
+			<div class="input-container">
+				<input type="password" id="password" name="pa" required>
+				<label for="password">Password</label>
+			</div>
+			<div class="error" id="error-msg" style="color:red;">@ViewBag.ErrorMessage</div>
+			<input type="submit" value="Login">
+
+			<a href="#" class="link">Forgot your password?</a><br>
+			<a asp-action="register" class="link">Sign up</a>
+		</form>
+	</div>
+	
+</body>
+</html>
